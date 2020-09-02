@@ -23,7 +23,7 @@ export class OldRenderer extends React.Component {
         return (
             <div id="OldRenderer" className="OldRenderer">
                 <div className="Heading">AdaptiveCards@1.3.0</div>
-                <div id="OldCard" ref={div => (this.OldCard = div)}></div>
+                <div id="OldCard" className="CardWrapper" ref={div => (this.OldCard = div)}></div>
             </div>
         )
     }
@@ -50,7 +50,7 @@ export class NewRenderer extends React.Component {
         return (
             <div id="NewRenderer" className="NewRenderer">
                 <div className="Heading">AdaptiveCards@2.1.0</div>
-                <div id="NewCard" ref={div => (this.NewCard = div)}></div>
+                <div id="NewCard" className="CardWrapper" ref={div => (this.NewCard = div)}></div>
             </div>
         )
     }
