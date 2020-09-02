@@ -11,13 +11,11 @@
 
 .OldRenderer {
   grid-area: 1 / 1 / 2 / 2;
-  border: 1px solid;
   padding: 50px;
 }
 
 .NewRenderer {
   grid-area: 1 / 2 / 2 / 3;
-  border: 1px solid;
   padding: 50px;
 }
 
