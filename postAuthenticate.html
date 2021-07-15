@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <script>
+      window.onload = function () {
+        var data = {
+          type: "ActionableMessagePostAuthenticate",
+          data: {
+            status: "Success",
+          },
+        };
+
+        var userAgent = window.navigator.userAgent;
+
+        var isAndroidClient = function (ua) {
+          /**
+           * Outlook-Android/2.0
+           */
+          return ua.indexOf("Outlook-Android") !== -1;
+        };
+
+        var isIosClient = function (ua) {
+          /**
+           * Outlook-iOS/2.0
+           * Outlook-iOS/725.5057280.prod.iphone (4.45.0)
+           */
+          return ua.indexOf("Outlook-iOS") !== -1;
+        };
+
+        var isMacClient = function (ua) {
+          /**
+           * Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko)
+           */
+          var uaArr = ua.split(" ");
+          return (
+            ua.indexOf("Macintosh") !== -1 &&
+            uaArr[uaArr.length - 1].indexOf("Gecko") !== -1
+          );
+        };
+
+        var isWindowsClient = function (ua) {
+          /**
+           * Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 10.0; Win64; x64; Trident/7.0; Microsoft Outlook 16.0.14309)
+           */
+          return (
+            ua.indexOf("Microsoft Outlook") !== -1 &&
+            ua.indexOf("Windows") !== -1
+          );
+        };
+
+        if (isAndroidClient(userAgent) || isIosClient(userAgent)) {
+          alert("Before Android/iOS");
+          window.opener.postMessage(JSON.stringify(data), "*");
+          alert("After Android/iOS");
+        } else if (isMacClient(userAgent)) {
+          alert("Before Mac");
+          window.webkit.messageHandlers.retryActionExecution.postMessage(
+            JSON.stringify(data)
+          );
+          alert("After Mac");
+        } else if (isWindowsClient(userAgent)) {
+          alert("Before Win");
+          window.external.RetryActionExecution("", true);
+          alert("After Win");
+        } else {
+          alert("Before OWA");
+          window.parent.postMessage(JSON.stringify(data), "*");
+          alert("After OWA");
+        }
+      };
+    </script>
+  </head>
+</html>
